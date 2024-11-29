@@ -25,8 +25,40 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
+    const mangoCollection = client.db("mangoDB").collection("mango");
+
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+
+
+
+
+    
+app.get('/mango',async(req,res)=>{
+  // const mangoes =req.body
+  const cursor = mangoCollection.find();
+ const result = await cursor.toArray()
+ res.send(result)
+})
+
+
+
+// post data
+
+app.post('/mango',async(req,res)=>{
+  const mangoes =req.body
+  const result = await mangoCollection.insertOne(mangoes);
+  res.send(result)
+  console.log(result)
+})
+
+
+
+
+
+
+
 
 
     // Send a ping to confirm a successful connection
